@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { MinusIcon, PlusIcon, Heart, Share } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 // Mock product data (in a real app, this would come from an API)
 const productData = {
@@ -44,6 +45,19 @@ const ProductDetail = () => {
   const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [activeTab, setActiveTab] = useState("details");
+  const { t } = useTranslation();
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  
+  // Handle image loading errors
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const fallbackImages = [
+      "https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
+      "https://images.unsplash.com/photo-1600607686527-dada3e0c318a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+    ];
+    e.currentTarget.src = fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
+    e.currentTarget.onerror = null; // Prevent infinite error loop
+  };
   
   const incrementQuantity = () => setQuantity(prevQty => prevQty + 1);
   const decrementQuantity = () => {
@@ -61,19 +75,22 @@ const ProductDetail = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Product Images */}
             <div className="space-y-4">
-              <div className="aspect-[4/3] overflow-hidden rounded-lg bg-gray-100">
+              <div className="aspect-[4/3] overflow-hidden rounded-lg bg-gray-100 shadow-sm hover:shadow-md transition-shadow">
                 <img 
                   src={productData.images[selectedImage]} 
                   alt={productData.name}
                   className="w-full h-full object-cover"
+                  onError={handleImageError}
                 />
               </div>
               <div className="flex gap-4 overflow-x-auto pb-2">
                 {productData.images.map((image, index) => (
                   <button 
                     key={index}
-                    className={`relative w-24 h-24 rounded-md overflow-hidden flex-shrink-0 ${
-                      selectedImage === index ? 'ring-2 ring-primary' : 'opacity-70'
+                    className={`relative w-24 h-24 rounded-md overflow-hidden flex-shrink-0 transition-all ${
+                      selectedImage === index 
+                        ? 'ring-2 ring-primary scale-105' 
+                        : 'opacity-70 hover:opacity-100 hover:scale-105'
                     }`}
                     onClick={() => setSelectedImage(index)}
                   >
@@ -81,6 +98,7 @@ const ProductDetail = () => {
                       src={image} 
                       alt={`${productData.name} view ${index + 1}`}
                       className="w-full h-full object-cover"
+                      onError={handleImageError}
                     />
                   </button>
                 ))}
@@ -104,23 +122,23 @@ const ProductDetail = () => {
                       </svg>
                     ))}
                   </div>
-                  <span className="text-marble-600 text-sm">({productData.reviews} reviews)</span>
+                  <span className="text-marble-600 text-sm">({productData.reviews} {t("product.reviews")})</span>
                   <span className="mx-2 text-marble-400">|</span>
                   <span className="text-sm">
                     {productData.stock > 0 ? (
                       <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                        In Stock
+                        {t("product.inStock")}
                       </Badge>
                     ) : (
                       <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
-                        Out of Stock
+                        {t("product.outOfStock")}
                       </Badge>
                     )}
                   </span>
                 </div>
               </div>
               
-              <p className="text-2xl font-medium mb-6">${productData.price.toFixed(2)} <span className="text-marble-600 text-sm">/ sq ft</span></p>
+              <p className="text-2xl font-medium mb-6">${productData.price.toFixed(2)} <span className="text-marble-600 text-sm">/ {t("prices.perSqFt")}</span></p>
               
               <div className="mb-6">
                 <p className="text-marble-700">{productData.description}</p>
@@ -128,13 +146,13 @@ const ProductDetail = () => {
               
               <div className="mb-8">
                 <div className="flex items-center mb-4">
-                  <div className="mr-8">
+                  <div className="mr-8 rtl:mr-0 rtl:ml-8">
                     <label htmlFor="quantity" className="block text-sm font-medium text-marble-700 mb-1">
-                      Quantity (sq ft)
+                      {t("product.quantity")} ({t("prices.perSqFt")})
                     </label>
                     <div className="flex items-center">
                       <button 
-                        className="w-10 h-10 rounded-l-md border border-r-0 border-marble-300 flex items-center justify-center"
+                        className="w-10 h-10 rounded-l-md border border-r-0 border-marble-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
                         onClick={decrementQuantity}
                       >
                         <MinusIcon className="h-4 w-4" />
@@ -152,7 +170,7 @@ const ProductDetail = () => {
                         className="w-16 h-10 border-y border-marble-300 text-center"
                       />
                       <button 
-                        className="w-10 h-10 rounded-r-md border border-l-0 border-marble-300 flex items-center justify-center"
+                        className="w-10 h-10 rounded-r-md border border-l-0 border-marble-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
                         onClick={incrementQuantity}
                       >
                         <PlusIcon className="h-4 w-4" />
@@ -162,45 +180,72 @@ const ProductDetail = () => {
                   
                   <div>
                     <label className="block text-sm font-medium text-marble-700 mb-1">
-                      Total Price
+                      {t("product.totalPrice")}
                     </label>
                     <p className="text-xl font-medium">${(productData.price * quantity).toFixed(2)}</p>
                   </div>
                 </div>
                 
-                <div className="flex flex-wrap gap-4">
-                  <Button size="lg" className="flex-1 md:flex-none md:min-w-[200px]">
-                    Add to Cart
+                <div className="flex flex-wrap gap-4 sticky bottom-0 bg-white py-4 z-10 md:relative md:py-0">
+                  <Button size="lg" className="flex-1 md:flex-none md:min-w-[200px] hover:bg-primary/90 transition-colors">
+                    {t("product.addToCart")}
                   </Button>
-                  <Button variant="outline" size="lg">
-                    <Heart className="h-5 w-5 mr-2" />
-                    Wishlist
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    onClick={() => setIsWishlisted(!isWishlisted)}
+                    className={`group transition-all ${isWishlisted ? 'bg-pink-50 border-pink-200' : ''}`}
+                  >
+                    <Heart 
+                      className={`h-5 w-5 mr-2 rtl:ml-2 rtl:mr-0 transition-colors ${isWishlisted ? 'text-red-500' : 'text-marble-500 group-hover:text-red-500'}`} 
+                      fill={isWishlisted ? "currentColor" : "none"}
+                    />
+                    {t("product.wishlist")}
                   </Button>
-                  <Button variant="outline" size="icon">
+                  <Button variant="outline" size="icon" className="hover:bg-gray-50 transition-colors">
                     <Share className="h-5 w-5" />
                   </Button>
                 </div>
               </div>
               
-              <Tabs defaultValue="details">
-                <TabsList className="w-full">
-                  <TabsTrigger value="details" className="flex-1">Details</TabsTrigger>
-                  <TabsTrigger value="features" className="flex-1">Features</TabsTrigger>
-                  <TabsTrigger value="specifications" className="flex-1">Specifications</TabsTrigger>
+              <Tabs 
+                value={activeTab} 
+                onValueChange={setActiveTab} 
+                className="border rounded-md p-1 bg-gray-50"
+              >
+                <TabsList className="w-full bg-transparent gap-1">
+                  <TabsTrigger 
+                    value="details" 
+                    className={`flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all`}
+                  >
+                    {t("product.tabs.details")}
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="features"
+                    className={`flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all`}
+                  >
+                    {t("product.tabs.features")}
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="specifications"
+                    className={`flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all`}
+                  >
+                    {t("product.tabs.specifications")}
+                  </TabsTrigger>
                 </TabsList>
-                <TabsContent value="details" className="pt-4">
+                <TabsContent value="details" className="pt-4 px-3">
                   <p className="text-marble-700">
                     {productData.description}
                   </p>
                 </TabsContent>
-                <TabsContent value="features" className="pt-4">
+                <TabsContent value="features" className="pt-4 px-3">
                   <ul className="list-disc pl-5 space-y-2">
                     {productData.features.map((feature, index) => (
                       <li key={index} className="text-marble-700">{feature}</li>
                     ))}
                   </ul>
                 </TabsContent>
-                <TabsContent value="specifications" className="pt-4">
+                <TabsContent value="specifications" className="pt-4 px-3">
                   <div className="grid grid-cols-2 gap-y-4">
                     {Object.entries(productData.specifications).map(([key, value]) => (
                       <div key={key}>

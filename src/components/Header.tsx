@@ -20,8 +20,8 @@ const Header = () => {
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b">
       <div className="container py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center">
-            <h1 className="text-2xl font-serif font-bold tracking-tight">MarbleAlt</h1>
+          <Link to="/" className="flex items-center group">
+            <h1 className="text-2xl font-serif font-bold tracking-tight group-hover:text-primary transition-colors">MarbleAlt</h1>
           </Link>
 
           <nav className="hidden md:flex gap-6">
@@ -36,7 +36,7 @@ const Header = () => {
               <Link
                 key={path}
                 to={path}
-                className="text-marble-700 hover:text-marble-900 transition-colors"
+                className="text-marble-700 hover:text-primary relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
                 onMouseEnter={() => setShowArabicPrices(true)}
                 onMouseLeave={() => setShowArabicPrices(false)}
               >
@@ -50,30 +50,31 @@ const Header = () => {
               variant="ghost" 
               size="icon" 
               onClick={toggleLanguage} 
-              className="relative"
+              className="relative hover:bg-gray-100 transition-colors"
               aria-label="Toggle language"
             >
               <Globe className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 text-xs font-bold">
-                {i18n.language === 'en' ? 'AR' : 'EN'}
+              <span className="absolute -top-1 -right-1 text-xs font-bold bg-primary text-white rounded-full w-4 h-4 flex items-center justify-center">
+                {i18n.language === 'en' ? 'ع' : 'E'}
               </span>
             </Button>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="hover:bg-gray-100 transition-colors">
               <Search className="h-5 w-5" />
             </Button>
-            <Link to="/cart">
-              <Button variant="ghost" size="icon">
+            <Link to="/cart" className="relative group">
+              <Button variant="ghost" size="icon" className="group-hover:bg-gray-100 transition-colors">
                 <ShoppingCart className="h-5 w-5" />
                 <span className="sr-only">{t("header.cart")}</span>
               </Button>
+              <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
             </Link>
-            <Button variant="outline" className="hidden md:flex">
+            <Button variant="outline" className="hidden md:flex hover:bg-gray-100 transition-colors">
               {t("header.login")}
             </Button>
-            <Button className="hidden md:flex">
+            <Button className="hidden md:flex hover:bg-primary/90 transition-colors">
               {t("header.signup")}
             </Button>
-            <Button variant="ghost" size="icon" className="md:hidden">
+            <Button variant="ghost" size="icon" className="md:hidden hover:bg-gray-100 transition-colors">
               <Menu className="h-5 w-5" />
             </Button>
           </div>

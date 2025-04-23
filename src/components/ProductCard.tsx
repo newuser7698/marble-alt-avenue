@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
+import { Eye, Heart } from "lucide-react";
 
 export interface Product {
   id: string;
@@ -34,20 +36,28 @@ const ProductCard = ({ product }: ProductCardProps) => {
     return `${t('prices.sar')} ${sarPrice.toFixed(2)} ${t('prices.perSqFt')}`;
   };
 
-  // Ensure product has a valid image with a proper fallback
+  // Enhanced image error handling with better fallback
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src = "https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80";
+    const fallbackImages = [
+      "https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
+      "https://images.unsplash.com/photo-1600607686527-dada3e0c318a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
+      "https://images.unsplash.com/photo-1615529151169-7b1d7d7c5e01?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+    ];
+    e.currentTarget.src = fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
     e.currentTarget.onerror = null; // Prevent infinite error loop
   };
-
+  
+  const [isFavorite, setIsFavorite] = React.useState(false);
+  
   return (
-    <Card className="overflow-hidden border-0 shadow-sm h-full bg-white product-hover">
+    <Card className="overflow-hidden border hover:border-primary transition-all duration-300 shadow-sm hover:shadow-md h-full bg-white group">
       <Link to={`/product/${product.id}`}>
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <img 
             src={product.image} 
             alt={product.name}
-            className="w-full h-64 object-cover"
+            className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+            loading="lazy"
             onError={handleImageError}
           />
           <div className="absolute top-2 left-2 flex flex-col gap-2">
@@ -66,17 +76,42 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </Link>
       <CardContent className="p-4">
         <Link to={`/product/${product.id}`}>
-          <h3 className="font-medium text-lg mb-1 hover:underline">{product.name}</h3>
+          <h3 className="font-medium text-lg mb-1 group-hover:text-primary transition-colors">{product.name}</h3>
         </Link>
         <p className="text-marble-600 text-sm mb-2">{product.category}</p>
         <p className="font-medium text-lg">{formatPrice(product.price)}</p>
       </CardContent>
-      <CardFooter className="flex justify-between p-4 pt-0">
-        <button className="text-primary hover:underline text-sm">
-          {t("product.quickView")}
-        </button>
-        <button className="text-primary hover:underline text-sm">
-          {t("product.addToCart")}
+      <CardFooter className="flex justify-between p-4 pt-0 items-center">
+        <HoverCard>
+          <HoverCardTrigger asChild>
+            <button className="flex items-center text-primary hover:underline text-sm transition-colors group-hover:text-primary/80">
+              <Eye className="w-4 h-4 mr-1 rtl:ml-1 rtl:mr-0" />
+              {t("product.quickView")}
+            </button>
+          </HoverCardTrigger>
+          <HoverCardContent className="w-80 p-0">
+            <div className="p-4">
+              <h4 className="font-medium mb-2">{product.name}</h4>
+              <p className="text-sm text-marble-600 mb-3">{t("product.quickPreview")}</p>
+              <img 
+                src={product.image} 
+                alt={product.name} 
+                className="w-full h-40 object-cover rounded-md mb-2"
+                onError={handleImageError}
+              />
+              <p className="font-medium">{formatPrice(product.price)}</p>
+            </div>
+          </HoverCardContent>
+        </HoverCard>
+        <button 
+          className={`flex items-center transition-colors ${isFavorite ? 'text-red-500' : 'text-marble-400'} hover:text-red-500`}
+          onClick={(e) => {
+            e.preventDefault();
+            setIsFavorite(!isFavorite);
+          }}
+          aria-label={t("product.addToFavorites")}
+        >
+          <Heart className="w-5 h-5" fill={isFavorite ? "currentColor" : "none"} />
         </button>
       </CardFooter>
     </Card>

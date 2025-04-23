@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard, { Product } from "@/components/ProductCard";
@@ -225,10 +225,21 @@ const allProducts: Record<string, Product[]> = {
   ]
 };
 
+// Interface to track filter states
+interface FilterState {
+  [key: string]: {
+    [value: string]: boolean;
+  };
+}
+
 const CategoryProducts = () => {
   const { categoryId } = useParams();
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState([0, 200]); // Updated price range for SAR
+  const [filterState, setFilterState] = useState<FilterState>({});
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 6;
   const { t, i18n } = useTranslation();
   
   // Default to first category if categoryId is invalid
@@ -238,6 +249,126 @@ const CategoryProducts = () => {
   
   const category = categories[safeCategory];
   const products = allProducts[safeCategory] || [];
+
+  // Initialize filter state
+  useEffect(() => {
+    const initialFilterState: FilterState = {};
+    
+    // Initialize all filter options as unchecked
+    Object.entries(category.filters).forEach(([filterType, values]) => {
+      initialFilterState[filterType] = {};
+      (values as string[]).forEach(value => {
+        initialFilterState[filterType][value] = false;
+      });
+    });
+    
+    setFilterState(initialFilterState);
+    
+    // Reset to first page when category changes
+    setCurrentPage(1);
+  }, [safeCategory]);
+
+  // Apply filters whenever filter state or price range changes
+  useEffect(() => {
+    filterProducts();
+  }, [filterState, priceRange, safeCategory]);
+
+  // Filter products based on selected filters and price range
+  const filterProducts = () => {
+    // Start with all products in the category
+    let result = [...products];
+    
+    // Filter by price range
+    result = result.filter(product => 
+      product.price >= priceRange[0] && 
+      product.price <= priceRange[1]
+    );
+    
+    // Check if any filters are active
+    const hasActiveFilters = Object.values(filterState).some(
+      filterGroup => Object.values(filterGroup).some(isSelected => isSelected)
+    );
+    
+    // If filters are active, apply them
+    if (hasActiveFilters) {
+      Object.entries(filterState).forEach(([filterType, values]) => {
+        const activeValues = Object.entries(values)
+          .filter(([_, isSelected]) => isSelected)
+          .map(([value]) => value);
+        
+        // If there are active values for this filter type, filter the products
+        if (activeValues.length > 0) {
+          // For simplicity in this mock, we'll filter using the product name
+          // In a real app, products would have proper attributes for filtering
+          result = result.filter(product => {
+            return activeValues.some(value => 
+              product.name.toLowerCase().includes(value.toLowerCase())
+            );
+          });
+        }
+      });
+    }
+    
+    setFilteredProducts(result);
+  };
+
+  // Toggle a filter option
+  const toggleFilter = (filterType: string, value: string) => {
+    setFilterState(prev => ({
+      ...prev,
+      [filterType]: {
+        ...prev[filterType],
+        [value]: !prev[filterType][value]
+      }
+    }));
+  };
+
+  // Apply filters button handler
+  const applyFilters = () => {
+    filterProducts();
+    // On mobile, hide the filters panel after applying
+    if (window.innerWidth < 768) {
+      setShowFilters(false);
+    }
+  };
+
+  // Reset all filters
+  const resetFilters = () => {
+    const resetState: FilterState = {};
+    
+    Object.entries(category.filters).forEach(([filterType, values]) => {
+      resetState[filterType] = {};
+      (values as string[]).forEach(value => {
+        resetState[filterType][value] = false;
+      });
+    });
+    
+    setFilterState(resetState);
+    setPriceRange([0, 200]);
+  };
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // Page change handlers
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToPage = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   // Format price according to current language
   const formatPrice = (price: number) => {
@@ -255,14 +386,14 @@ const CategoryProducts = () => {
         <div className="container">
           {/* Category Header */}
           <div className="mb-8">
-            <h1 className="text-4xl font-serif font-medium mb-4">{category.name}</h1>
-            <p className="text-marble-700 max-w-4xl">{category.description}</p>
+            <h1 className="text-4xl font-serif font-medium mb-4">{t(`categories.${safeCategory}.name`, category.name)}</h1>
+            <p className="text-marble-700 max-w-4xl">{t(`categories.${safeCategory}.description`, category.description)}</p>
           </div>
           
           <div className="flex justify-between items-center mb-6">
             <div>
               <p className="text-sm text-marble-600">
-                {products.length} {t('categories.products')}
+                {filteredProducts.length} {t('categories.products')}
               </p>
             </div>
             <Button 
@@ -313,9 +444,13 @@ const CategoryProducts = () => {
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="space-y-2 py-2">
-                          {values.map((value: string) => (
-                            <div key={value} className="flex items-center space-x-2">
-                              <Checkbox id={`${filterName}-${value}`} />
+                          {(values as string[]).map((value: string) => (
+                            <div key={value} className="flex items-center space-x-2 rtl:space-x-reverse">
+                              <Checkbox 
+                                id={`${filterName}-${value}`} 
+                                checked={filterState[filterName]?.[value] || false}
+                                onCheckedChange={() => toggleFilter(filterName, value)}
+                              />
                               <label 
                                 htmlFor={`${filterName}-${value}`}
                                 className="text-sm text-marble-700 cursor-pointer"
@@ -332,27 +467,69 @@ const CategoryProducts = () => {
                 
                 <Separator className="my-4" />
                 
-                {/* Apply Filters Button */}
-                <Button className="w-full">{t('categories.apply')}</Button>
+                {/* Apply and Reset Filters Buttons */}
+                <div className="flex flex-col space-y-2">
+                  <Button className="w-full" onClick={applyFilters}>{t('categories.apply')}</Button>
+                  <Button variant="outline" className="w-full" onClick={resetFilters}>{t('categories.reset')}</Button>
+                </div>
               </div>
             </div>
             
             {/* Products Grid */}
             <div className="col-span-1 md:col-span-3">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {products.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
+              {currentProducts.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {currentProducts.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-lg text-marble-600">{t('categories.noProducts')}</p>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4"
+                    onClick={resetFilters}
+                  >
+                    {t('categories.clearFilters')}
+                  </Button>
+                </div>
+              )}
               
               {/* Pagination */}
-              {products.length > 0 && (
+              {filteredProducts.length > productsPerPage && (
                 <div className="mt-12 flex justify-center">
-                  <Button variant="outline" className="mx-1">{t('pagination.previous')}</Button>
-                  <Button className="mx-1 bg-primary">1</Button>
-                  <Button variant="outline" className="mx-1">2</Button>
-                  <Button variant="outline" className="mx-1">3</Button>
-                  <Button variant="outline" className="mx-1">{t('pagination.next')}</Button>
+                  <Button 
+                    variant="outline" 
+                    className="mx-1"
+                    onClick={goToPreviousPage}
+                    disabled={currentPage === 1}
+                  >
+                    {t('pagination.previous')}
+                  </Button>
+                  
+                  {[...Array(totalPages)].map((_, i) => (
+                    <Button 
+                      key={i} 
+                      className={`mx-1 ${currentPage === i + 1 ? 'bg-primary' : 'variant-outline'}`}
+                      variant={currentPage === i + 1 ? 'default' : 'outline'}
+                      onClick={() => goToPage(i + 1)}
+                    >
+                      {i18n.language === 'ar' 
+                        ? (i + 1).toString().replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d])
+                        : i + 1
+                      }
+                    </Button>
+                  ))}
+                  
+                  <Button 
+                    variant="outline" 
+                    className="mx-1"
+                    onClick={goToNextPage}
+                    disabled={currentPage === totalPages}
+                  >
+                    {t('pagination.next')}
+                  </Button>
                 </div>
               )}
             </div>

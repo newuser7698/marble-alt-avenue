@@ -1,27 +1,30 @@
 
 import { Shield, Package, Truck, Star } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const Benefits = () => {
+  const { t } = useTranslation();
+
   const benefitItems = [
     {
       icon: <Shield className="w-10 h-10 text-primary" />,
-      title: "10-Year Warranty",
-      description: "All our marble alternative products come with an industry-leading warranty for peace of mind."
+      title: t("benefits.warranty"),
+      description: t("benefits.warrantyDescription")
     },
     {
       icon: <Package className="w-10 h-10 text-primary" />,
-      title: "Free Samples",
-      description: "Test our products in your space before making a purchase decision."
+      title: t("benefits.samples"),
+      description: t("benefits.samplesDescription")
     },
     {
       icon: <Truck className="w-10 h-10 text-primary" />,
-      title: "Fast Shipping",
-      description: "Enjoy quick delivery with our efficient logistics and shipping partners."
+      title: t("benefits.shipping"),
+      description: t("benefits.shippingDescription")
     },
     {
       icon: <Star className="w-10 h-10 text-primary" />,
-      title: "Expert Support",
-      description: "Get personalized advice from our team of interior design specialists."
+      title: t("benefits.support"),
+      description: t("benefits.supportDescription")
     }
   ];
 
@@ -29,9 +32,9 @@ const Benefits = () => {
     <section className="py-16 bg-accent">
       <div className="container">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-serif font-medium mb-4">Why Choose MarbleAlt</h2>
+          <h2 className="text-3xl md:text-4xl font-serif font-medium mb-4">{t("benefits.title")}</h2>
           <p className="text-marble-600 max-w-2xl mx-auto">
-            We're committed to providing the highest quality marble alternatives with exceptional service
+            {t("benefits.subtitle")}
           </p>
         </div>
         

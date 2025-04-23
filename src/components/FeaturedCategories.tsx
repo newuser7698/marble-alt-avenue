@@ -1,41 +1,44 @@
 
 import { Link } from "react-router-dom";
-
-const categories = [
-  {
-    id: "marble-alternative",
-    name: "Marble Alternative",
-    description: "Premium surfaces with the look of natural stone",
-    image: "https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
-  },
-  {
-    id: "rolls",
-    name: "Rolls",
-    description: "Flexible and versatile covering solutions",
-    image: "https://images.unsplash.com/photo-1615529151169-7b1d7d7c5e01?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
-  },
-  {
-    id: "spc",
-    name: "SPC Flooring",
-    description: "Durable and waterproof stone plastic composite",
-    image: "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
-  },
-  {
-    id: "pvc",
-    name: "PVC Panels",
-    description: "Lightweight and easy-to-install wall solutions",
-    image: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
-  }
-];
+import { useTranslation } from "react-i18next";
 
 const FeaturedCategories = () => {
+  const { t } = useTranslation();
+  
+  const categories = [
+    {
+      id: "marble-alternative",
+      name: t("header.marbleAlternative"),
+      description: t("categories.filters"),
+      image: "https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+    },
+    {
+      id: "rolls",
+      name: t("header.rolls"),
+      description: t("categories.filters"),
+      image: "https://images.unsplash.com/photo-1615529151169-7b1d7d7c5e01?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+    },
+    {
+      id: "spc",
+      name: t("header.spc"),
+      description: t("categories.filters"),
+      image: "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+    },
+    {
+      id: "pvc",
+      name: t("header.pvc"),
+      description: t("categories.filters"),
+      image: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+    }
+  ];
+
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="container">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-serif font-medium mb-4">Explore Our Collections</h2>
+          <h2 className="text-3xl md:text-4xl font-serif font-medium mb-4">{t("home.categories.title")}</h2>
           <p className="text-marble-600 max-w-2xl mx-auto">
-            Discover our range of premium marble alternative products for any space and application
+            {t("home.categories.subtitle")}
           </p>
         </div>
         
@@ -55,7 +58,7 @@ const FeaturedCategories = () => {
                 <h3 className="text-white text-xl font-serif font-medium mb-2">{category.name}</h3>
                 <p className="text-white/80 text-sm mb-4">{category.description}</p>
                 <span className="text-white/90 text-sm flex items-center transition-all translate-x-0 group-hover:translate-x-2">
-                  Explore Collection →
+                  {t("home.categories.subtitle")} →
                 </span>
               </div>
             </Link>

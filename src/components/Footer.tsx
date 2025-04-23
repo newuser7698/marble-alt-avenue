@@ -1,7 +1,11 @@
 
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
+  const year = new Date().getFullYear();
+
   return (
     <footer className="bg-marble-900 text-marble-100 py-16">
       <div className="container">
@@ -10,37 +14,35 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-serif font-medium mb-4">MarbleAlt</h3>
             <p className="text-marble-300 mb-4">
-              Premium marble alternative products for modern spaces at affordable prices.
+              {t("footer.companyInfo")}
             </p>
             <p className="text-marble-300">
-              123 Stone Avenue<br />
-              Marble City, MC 12345<br />
-              United States
+              {t("footer.address")}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-serif font-medium mb-4">Quick Links</h3>
+            <h3 className="text-xl font-serif font-medium mb-4">{t("footer.quickLinks")}</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/about" className="text-marble-300 hover:text-white transition-colors">
-                  About Us
+                  {t("footer.aboutUs")}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="text-marble-300 hover:text-white transition-colors">
-                  Contact Us
+                  {t("footer.contactUs")}
                 </Link>
               </li>
               <li>
                 <Link to="/blog" className="text-marble-300 hover:text-white transition-colors">
-                  Blog
+                  {t("footer.blog")}
                 </Link>
               </li>
               <li>
                 <Link to="/faqs" className="text-marble-300 hover:text-white transition-colors">
-                  FAQs
+                  {t("footer.faqs")}
                 </Link>
               </li>
             </ul>
@@ -48,26 +50,26 @@ const Footer = () => {
 
           {/* Product Categories */}
           <div>
-            <h3 className="text-xl font-serif font-medium mb-4">Products</h3>
+            <h3 className="text-xl font-serif font-medium mb-4">{t("footer.products")}</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/categories/marble-alternative" className="text-marble-300 hover:text-white transition-colors">
-                  Marble Alternative
+                  {t("header.marbleAlternative")}
                 </Link>
               </li>
               <li>
                 <Link to="/categories/rolls" className="text-marble-300 hover:text-white transition-colors">
-                  Rolls
+                  {t("header.rolls")}
                 </Link>
               </li>
               <li>
                 <Link to="/categories/spc" className="text-marble-300 hover:text-white transition-colors">
-                  SPC
+                  {t("header.spc")}
                 </Link>
               </li>
               <li>
                 <Link to="/categories/pvc" className="text-marble-300 hover:text-white transition-colors">
-                  PVC
+                  {t("header.pvc")}
                 </Link>
               </li>
             </ul>
@@ -75,18 +77,18 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-xl font-serif font-medium mb-4">Stay Updated</h3>
+            <h3 className="text-xl font-serif font-medium mb-4">{t("footer.stayUpdated")}</h3>
             <p className="text-marble-300 mb-4">
-              Subscribe to our newsletter for the latest products and design inspiration.
+              {t("footer.newsletter")}
             </p>
             <div className="flex">
               <input 
                 type="email" 
-                placeholder="Your email" 
+                placeholder={t("footer.yourEmail")}
                 className="p-2 bg-marble-800 text-white rounded-l-md flex-grow focus:outline-none focus:ring-1 focus:ring-white"
               />
               <button className="bg-white text-marble-900 px-4 py-2 rounded-r-md hover:bg-marble-300 transition-colors">
-                Subscribe
+                {t("footer.subscribe")}
               </button>
             </div>
           </div>
@@ -95,17 +97,17 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="mt-12 pt-6 border-t border-marble-800 flex flex-col md:flex-row justify-between items-center">
           <p className="text-marble-400 text-sm mb-4 md:mb-0">
-            &copy; {new Date().getFullYear()} MarbleAlt. All rights reserved.
+            &copy; {year} MarbleAlt. {t("footer.rights")}
           </p>
           <div className="flex gap-4">
             <Link to="/privacy" className="text-marble-400 text-sm hover:text-white transition-colors">
-              Privacy Policy
+              {t("footer.privacy")}
             </Link>
             <Link to="/terms" className="text-marble-400 text-sm hover:text-white transition-colors">
-              Terms of Service
+              {t("footer.terms")}
             </Link>
             <Link to="/shipping" className="text-marble-400 text-sm hover:text-white transition-colors">
-              Shipping Policy
+              {t("footer.shipping")}
             </Link>
           </div>
         </div>

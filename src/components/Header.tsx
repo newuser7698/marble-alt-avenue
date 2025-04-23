@@ -1,18 +1,31 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Menu, Search, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
   const [showArabicPrices, setShowArabicPrices] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      setCartCount(cart.length);
+    };
+
+    updateCartCount();
+    window.addEventListener('cartUpdated', updateCartCount);
+    
+    return () => {
+      window.removeEventListener('cartUpdated', updateCartCount);
+    };
+  }, []);
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'ar' : 'en';
     i18n.changeLanguage(newLang);
-    // Change document dir attribute for RTL/LTR support
     document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
   };
 
@@ -66,7 +79,11 @@ const Header = () => {
                 <ShoppingCart className="h-5 w-5" />
                 <span className="sr-only">{t("header.cart")}</span>
               </Button>
-              <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-scale-in">
+                  {cartCount}
+                </span>
+              )}
             </Link>
             <Button variant="outline" className="hidden md:flex hover:bg-gray-100 transition-colors">
               {t("header.login")}

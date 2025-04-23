@@ -1,0 +1,21 @@
+
+{
+  "header": {
+    "marbleAlternative": "Marble Alternative",
+    "rolls": "Rolls",
+    "spc": "SPC",
+    "pvc": "PVC",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "signup": "Sign Up",
+    "cart": "Cart"
+  },
+  "prices": {
+    "perSqFt": "/ sq ft"
+  },
+  "product": {
+    "quickView": "Quick View",
+    "addToCart": "Add to Cart"
+  }
+}

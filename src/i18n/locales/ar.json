@@ -1,0 +1,21 @@
+
+{
+  "header": {
+    "marbleAlternative": "بديل الرخام",
+    "rolls": "لفات",
+    "spc": "إس بي سي",
+    "pvc": "بي في سي",
+    "about": "عن الشركة",
+    "contact": "اتصل بنا",
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "cart": "السلة"
+  },
+  "prices": {
+    "perSqFt": "/ متر مربع"
+  },
+  "product": {
+    "quickView": "نظرة سريعة",
+    "addToCart": "أضف إلى السلة"
+  }
+}

@@ -2,72 +2,64 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Menu, Search } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 const Header = () => {
+  const { t, i18n } = useTranslation();
+  const [showArabicPrices, setShowArabicPrices] = useState(false);
+
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === 'en' ? 'ar' : 'en');
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b">
       <div className="container py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
           <Link to="/" className="flex items-center">
             <h1 className="text-2xl font-serif font-bold tracking-tight">MarbleAlt</h1>
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-6">
-            <Link 
-              to="/categories/marble-alternative" 
-              className="text-marble-700 hover:text-marble-900 transition-colors"
-            >
-              Marble Alternative
-            </Link>
-            <Link 
-              to="/categories/rolls" 
-              className="text-marble-700 hover:text-marble-900 transition-colors"
-            >
-              Rolls
-            </Link>
-            <Link 
-              to="/categories/spc" 
-              className="text-marble-700 hover:text-marble-900 transition-colors"
-            >
-              SPC
-            </Link>
-            <Link 
-              to="/categories/pvc" 
-              className="text-marble-700 hover:text-marble-900 transition-colors"
-            >
-              PVC
-            </Link>
-            <Link 
-              to="/about" 
-              className="text-marble-700 hover:text-marble-900 transition-colors"
-            >
-              About
-            </Link>
-            <Link 
-              to="/contact" 
-              className="text-marble-700 hover:text-marble-900 transition-colors"
-            >
-              Contact
-            </Link>
+            {[
+              { path: "/categories/marble-alternative", label: t("header.marbleAlternative") },
+              { path: "/categories/rolls", label: t("header.rolls") },
+              { path: "/categories/spc", label: t("header.spc") },
+              { path: "/categories/pvc", label: t("header.pvc") },
+              { path: "/about", label: t("header.about") },
+              { path: "/contact", label: t("header.contact") }
+            ].map(({ path, label }) => (
+              <Link
+                key={path}
+                to={path}
+                className="text-marble-700 hover:text-marble-900 transition-colors"
+                onMouseEnter={() => setShowArabicPrices(true)}
+                onMouseLeave={() => setShowArabicPrices(false)}
+              >
+                {label}
+              </Link>
+            ))}
           </nav>
 
-          {/* Actions */}
           <div className="flex items-center gap-4">
+            <Button variant="ghost" onClick={toggleLanguage}>
+              {i18n.language === 'en' ? 'عربي' : 'English'}
+            </Button>
             <Button variant="ghost" size="icon">
               <Search className="h-5 w-5" />
             </Button>
             <Link to="/cart">
               <Button variant="ghost" size="icon">
                 <ShoppingCart className="h-5 w-5" />
+                <span className="sr-only">{t("header.cart")}</span>
               </Button>
             </Link>
             <Button variant="outline" className="hidden md:flex">
-              Login
+              {t("header.login")}
             </Button>
             <Button className="hidden md:flex">
-              Sign Up
+              {t("header.signup")}
             </Button>
             <Button variant="ghost" size="icon" className="md:hidden">
               <Menu className="h-5 w-5" />

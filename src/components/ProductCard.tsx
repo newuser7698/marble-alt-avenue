@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -21,10 +22,22 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { t, i18n } = useTranslation();
   
   const formatPrice = (price: number) => {
+    // Convert price to SAR (assuming the prices are stored in USD)
+    const sarPrice = price * 3.75; // 1 USD ≈ 3.75 SAR
+    
     if (i18n.language === 'ar') {
-      return price.toFixed(2).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d]) + t('prices.perSqFt');
+      // Format for Arabic
+      const arabicPrice = sarPrice.toFixed(2).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+      return `${t('prices.sar')} ${arabicPrice} ${t('prices.perSqFt')}`;
     }
-    return `$${price.toFixed(2)} ${t('prices.perSqFt')}`;
+    // Format for English
+    return `${t('prices.sar')} ${sarPrice.toFixed(2)} ${t('prices.perSqFt')}`;
+  };
+
+  // Ensure product has a valid image with a proper fallback
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = "https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80";
+    e.currentTarget.onerror = null; // Prevent infinite error loop
   };
 
   return (
@@ -35,19 +48,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
             src={product.image} 
             alt={product.name}
             className="w-full h-64 object-cover"
-            onError={(e) => {
-              e.currentTarget.src = "https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80";
-            }}
+            onError={handleImageError}
           />
           <div className="absolute top-2 left-2 flex flex-col gap-2">
             {product.isNew && (
               <Badge className="bg-primary text-primary-foreground">
-                {i18n.language === 'ar' ? 'جديد' : 'New'}
+                {t('product.new')}
               </Badge>
             )}
             {product.isPopular && (
               <Badge className="bg-accent text-accent-foreground">
-                {i18n.language === 'ar' ? 'الأكثر مبيعاً' : 'Popular'}
+                {t('product.popular')}
               </Badge>
             )}
           </div>

@@ -12,10 +12,80 @@
     "cart": "السلة"
   },
   "prices": {
-    "perSqFt": "/ متر مربع"
+    "perSqFt": "/ متر مربع",
+    "sar": "ر.س"
   },
   "product": {
     "quickView": "نظرة سريعة",
-    "addToCart": "أضف إلى السلة"
+    "addToCart": "أضف إلى السلة",
+    "popular": "الأكثر مبيعاً",
+    "new": "جديد"
+  },
+  "categories": {
+    "title": "الفئات",
+    "filters": "التصفية",
+    "apply": "تطبيق التصفية",
+    "priceRange": "نطاق السعر",
+    "colors": "الألوان",
+    "patterns": "الأنماط",
+    "finishes": "التشطيبات",
+    "widths": "العرض",
+    "thicknesses": "السماكة",
+    "backings": "الدعم الخلفي",
+    "wearLayers": "طبقات التآكل",
+    "edges": "الحواف",
+    "sizes": "الأحجام",
+    "installations": "التركيب",
+    "products": "المنتجات"
+  },
+  "footer": {
+    "quickLinks": "روابط سريعة",
+    "aboutUs": "من نحن",
+    "contactUs": "اتصل بنا",
+    "blog": "المدونة",
+    "faqs": "الأسئلة الشائعة",
+    "products": "المنتجات",
+    "stayUpdated": "ابق على اطلاع",
+    "newsletter": "اشترك في نشرتنا الإخبارية للحصول على أحدث المنتجات وإلهام التصميم.",
+    "subscribe": "اشترك",
+    "yourEmail": "بريدك الإلكتروني",
+    "rights": "جميع الحقوق محفوظة",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة",
+    "shipping": "سياسة الشحن"
+  },
+  "contact": {
+    "title": "اتصل بنا",
+    "subtitle": "هل لديك أسئلة حول منتجاتنا أو تحتاج إلى مساعدة؟ نحن هنا للمساعدة.",
+    "form": {
+      "name": "اسمك",
+      "email": "البريد الإلكتروني",
+      "subject": "الموضوع",
+      "message": "رسالتك",
+      "send": "إرسال الرسالة",
+      "placeholder": {
+        "name": "محمد عبدالله",
+        "email": "mohammed@example.com",
+        "subject": "كيف يمكننا مساعدتك؟",
+        "message": "يرجى تقديم تفاصيل عن استفسارك..."
+      }
+    },
+    "info": {
+      "email": "البريد الإلكتروني",
+      "generalInquiries": "للاستفسارات العامة:",
+      "customerSupport": "لدعم العملاء:",
+      "call": "اتصل بنا",
+      "customerService": "خدمة العملاء:",
+      "salesTeam": "فريق المبيعات:",
+      "hours": "الاثنين-الجمعة: 9 صباحًا - 6 مساءً بتوقيت السعودية<br/>السبت: 10 صباحًا - 4 مساءً بتوقيت السعودية",
+      "visit": "زيارتنا",
+      "mainShowroom": "المعرض الرئيسي:",
+      "connectWithUs": "تواصل معنا",
+      "location": "موقعنا"
+    }
+  },
+  "pagination": {
+    "previous": "السابق",
+    "next": "التالي"
   }
 }

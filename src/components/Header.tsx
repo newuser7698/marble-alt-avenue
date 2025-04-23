@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Menu, Search } from "lucide-react";
+import { ShoppingCart, Menu, Search, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
@@ -10,7 +10,10 @@ const Header = () => {
   const [showArabicPrices, setShowArabicPrices] = useState(false);
 
   const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === 'en' ? 'ar' : 'en');
+    const newLang = i18n.language === 'en' ? 'ar' : 'en';
+    i18n.changeLanguage(newLang);
+    // Change document dir attribute for RTL/LTR support
+    document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
   };
 
   return (
@@ -43,8 +46,17 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center gap-4">
-            <Button variant="ghost" onClick={toggleLanguage}>
-              {i18n.language === 'en' ? 'عربي' : 'English'}
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={toggleLanguage} 
+              className="relative"
+              aria-label="Toggle language"
+            >
+              <Globe className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 text-xs font-bold">
+                {i18n.language === 'en' ? 'AR' : 'EN'}
+              </span>
             </Button>
             <Button variant="ghost" size="icon">
               <Search className="h-5 w-5" />

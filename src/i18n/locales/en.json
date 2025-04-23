@@ -12,10 +12,80 @@
     "cart": "Cart"
   },
   "prices": {
-    "perSqFt": "/ sq ft"
+    "perSqFt": "/ sq ft",
+    "sar": "SAR"
   },
   "product": {
     "quickView": "Quick View",
-    "addToCart": "Add to Cart"
+    "addToCart": "Add to Cart",
+    "popular": "Popular",
+    "new": "New"
+  },
+  "categories": {
+    "title": "Categories",
+    "filters": "Filters",
+    "apply": "Apply Filters",
+    "priceRange": "Price Range",
+    "colors": "Colors",
+    "patterns": "Patterns",
+    "finishes": "Finishes",
+    "widths": "Widths",
+    "thicknesses": "Thicknesses",
+    "backings": "Backings",
+    "wearLayers": "Wear Layers",
+    "edges": "Edges",
+    "sizes": "Sizes",
+    "installations": "Installations",
+    "products": "products"
+  },
+  "footer": {
+    "quickLinks": "Quick Links",
+    "aboutUs": "About Us",
+    "contactUs": "Contact Us",
+    "blog": "Blog",
+    "faqs": "FAQs",
+    "products": "Products",
+    "stayUpdated": "Stay Updated",
+    "newsletter": "Subscribe to our newsletter for the latest products and design inspiration.",
+    "subscribe": "Subscribe",
+    "yourEmail": "Your email",
+    "rights": "All rights reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "shipping": "Shipping Policy"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Have questions about our products or need assistance? We're here to help.",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Your Message",
+      "send": "Send Message",
+      "placeholder": {
+        "name": "John Smith",
+        "email": "john@example.com",
+        "subject": "How can we help you?",
+        "message": "Please provide details about your inquiry..."
+      }
+    },
+    "info": {
+      "email": "Email Us",
+      "generalInquiries": "For general inquiries:",
+      "customerSupport": "For customer support:",
+      "call": "Call Us",
+      "customerService": "Customer Service:",
+      "salesTeam": "Sales Team:",
+      "hours": "Monday-Friday: 9am-6pm KSA<br/>Saturday: 10am-4pm KSA",
+      "visit": "Visit Us",
+      "mainShowroom": "Main Showroom:",
+      "connectWithUs": "Connect With Us",
+      "location": "Our Location"
+    }
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
   }
 }

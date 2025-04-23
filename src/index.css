@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Almarai:wght@300;400;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -46,15 +47,20 @@
   }
 
   [dir="rtl"] {
-    font-family: 'Almarai', sans-serif;
+    font-family: 'Tajawal', sans-serif;
   }
 
   [dir="ltr"] {
     font-family: 'Inter', sans-serif;
   }
 
-  h1, h2, h3, h4, h5 {
-    @apply font-serif;
+  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5 {
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 700;
+  }
+
+  [dir="ltr"] h1, [dir="ltr"] h2, [dir="ltr"] h3, [dir="ltr"] h4, [dir="ltr"] h5 {
+    font-family: 'Playfair Display', serif;
   }
 
   .container {
@@ -68,4 +74,35 @@
   .btn-hover {
     @apply transition-all duration-300 hover:bg-marble-800 hover:text-white;
   }
+  
+  /* RTL specific adjustments */
+  [dir="rtl"] .ml-auto {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  
+  [dir="rtl"] .mr-auto {
+    margin-right: 0;
+    margin-left: auto;
+  }
+  
+  [dir="rtl"] .ml-1 { margin-left: 0; margin-right: 0.25rem; }
+  [dir="rtl"] .ml-2 { margin-left: 0; margin-right: 0.5rem; }
+  [dir="rtl"] .ml-3 { margin-left: 0; margin-right: 0.75rem; }
+  [dir="rtl"] .ml-4 { margin-left: 0; margin-right: 1rem; }
+  
+  [dir="rtl"] .mr-1 { margin-right: 0; margin-left: 0.25rem; }
+  [dir="rtl"] .mr-2 { margin-right: 0; margin-left: 0.5rem; }
+  [dir="rtl"] .mr-3 { margin-right: 0; margin-left: 0.75rem; }
+  [dir="rtl"] .mr-4 { margin-right: 0; margin-left: 1rem; }
+  
+  [dir="rtl"] .pl-1 { padding-left: 0; padding-right: 0.25rem; }
+  [dir="rtl"] .pl-2 { padding-left: 0; padding-right: 0.5rem; }
+  [dir="rtl"] .pl-3 { padding-left: 0; padding-right: 0.75rem; }
+  [dir="rtl"] .pl-4 { padding-left: 0; padding-right: 1rem; }
+  
+  [dir="rtl"] .pr-1 { padding-right: 0; padding-left: 0.25rem; }
+  [dir="rtl"] .pr-2 { padding-right: 0; padding-left: 0.5rem; }
+  [dir="rtl"] .pr-3 { padding-right: 0; padding-left: 0.75rem; }
+  [dir="rtl"] .pr-4 { padding-right: 0; padding-left: 1rem; }
 }

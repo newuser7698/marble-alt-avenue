@@ -67,14 +67,6 @@
     @apply px-4 md:px-6 lg:px-8 max-w-7xl mx-auto;
   }
 
-  .product-hover {
-    @apply transition-transform duration-300 ease-in-out hover:scale-105;
-  }
-  
-  .btn-hover {
-    @apply transition-all duration-300 hover:bg-marble-800 hover:text-white;
-  }
-  
   /* RTL specific adjustments */
   [dir="rtl"] .ml-auto {
     margin-left: 0;
@@ -105,4 +97,13 @@
   [dir="rtl"] .pr-2 { padding-right: 0; padding-left: 0.5rem; }
   [dir="rtl"] .pr-3 { padding-right: 0; padding-left: 0.75rem; }
   [dir="rtl"] .pr-4 { padding-right: 0; padding-left: 1rem; }
+  
+  /* Animation and hover utilities */
+  .product-hover {
+    @apply transition-transform duration-300 ease-in-out hover:scale-105;
+  }
+  
+  .btn-hover {
+    @apply transition-all duration-300 hover:bg-marble-800 hover:text-white;
+  }
 }

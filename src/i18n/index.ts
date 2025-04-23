@@ -18,11 +18,19 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'en',
+    lng: 'ar', // Set Arabic as default
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false
     }
   });
+
+// Set initial direction
+document.documentElement.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
+
+// Listen for language changes
+i18n.on('languageChanged', (lng) => {
+  document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
+});
 
 export default i18n;

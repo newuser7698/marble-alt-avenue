@@ -1,4 +1,5 @@
 
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +23,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { t, i18n } = useTranslation();
+  const [isFavorite, setIsFavorite] = useState(false);
   
   const formatPrice = (price: number) => {
     // Convert price to SAR (assuming the prices are stored in USD)
@@ -46,8 +48,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
     e.currentTarget.src = fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
     e.currentTarget.onerror = null; // Prevent infinite error loop
   };
-  
-  const [isFavorite, setIsFavorite] = React.useState(false);
   
   return (
     <Card className="overflow-hidden border hover:border-primary transition-all duration-300 shadow-sm hover:shadow-md h-full bg-white group">

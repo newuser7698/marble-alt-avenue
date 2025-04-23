@@ -20,11 +20,11 @@ const ImageGallery = ({ images, productName }: ImageGalleryProps) => {
 
   return (
     <div className="space-y-4">
-      <div className="aspect-[4/3] overflow-hidden rounded-lg bg-gray-100 shadow-sm hover:shadow-md transition-shadow">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-gray-100 shadow-sm hover:shadow-md transition-shadow">
         <img 
           src={images[selectedImage]} 
           alt={productName}
-          className="w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
           onError={handleImageError}
         />
       </div>
@@ -32,7 +32,7 @@ const ImageGallery = ({ images, productName }: ImageGalleryProps) => {
         {images.map((image, index) => (
           <button 
             key={index}
-            className={`relative w-24 h-24 rounded-md overflow-hidden flex-shrink-0 transition-all ${
+            className={`relative aspect-square w-24 rounded-md overflow-hidden flex-shrink-0 transition-all ${
               selectedImage === index 
                 ? 'ring-2 ring-primary scale-105' 
                 : 'opacity-70 hover:opacity-100 hover:scale-105'
@@ -42,7 +42,7 @@ const ImageGallery = ({ images, productName }: ImageGalleryProps) => {
             <img 
               src={image} 
               alt={`${productName} view ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
               onError={handleImageError}
             />
           </button>

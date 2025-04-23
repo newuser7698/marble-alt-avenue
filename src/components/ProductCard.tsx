@@ -74,7 +74,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <Card className="overflow-hidden border hover:border-primary transition-all duration-300 shadow-sm hover:shadow-md h-full bg-white group relative">
       <Link to={`/product/${product.id}`}>
-        <div className="relative overflow-hidden aspect-[4/3]">
+        <div className="relative aspect-[4/3] w-full">
           <div className={`absolute inset-0 bg-gray-100 animate-pulse ${isImageLoading ? 'block' : 'hidden'}`} />
           <img 
             src={product.image} 

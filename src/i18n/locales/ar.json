@@ -19,7 +19,20 @@
     "quickView": "نظرة سريعة",
     "addToCart": "أضف إلى السلة",
     "popular": "الأكثر مبيعاً",
-    "new": "جديد"
+    "new": "جديد",
+    "reviews": "تقييمات",
+    "inStock": "متوفر",
+    "outOfStock": "غير متوفر",
+    "quantity": "الكمية",
+    "totalPrice": "السعر الإجمالي",
+    "wishlist": "أضف للمفضلة",
+    "addToFavorites": "أضف للمفضلة",
+    "quickPreview": "معاينة سريعة للمنتج",
+    "tabs": {
+      "details": "التفاصيل",
+      "features": "المميزات",
+      "specifications": "المواصفات"
+    }
   },
   "categories": {
     "title": "الفئات",
@@ -167,5 +180,34 @@
   "footer": {
     "companyInfo": "منتجات بديل الرخام الممتازة للمساحات الحديثة بأسعار معقولة.",
     "address": "123 شارع الحجر، مدينة الرخام، 12345، المملكة العربية السعودية"
+  },
+  "products": {
+    "carrara": {
+      "name": "رخام كارارا الأبيض البديل",
+      "description": "يوفر بديل رخام كارارا الأبيض الفاخر أناقة الرخام الإيطالي الكلاسيكي دون مخاوف الصيانة أو التكلفة العالية. مثالي لأسطح العمل والجدران الخلفية وجدران الميزات.",
+      "features": {
+        "stainResistant": "سطح مقاوم للبقع",
+        "heatResistant": "مقاوم للحرارة حتى 180 درجة مئوية",
+        "scratchResistant": "مقاوم للخدوش",
+        "easyClean": "سهل التنظيف",
+        "noSealing": "لا يحتاج إلى ختم"
+      },
+      "specifications": {
+        "material": "مركب بي في سي عالي الجودة",
+        "thickness": "12 ملم",
+        "size": "120 سم × 240 سم",
+        "weight": "22 كجم للوح",
+        "installation": "تركيب لاصق",
+        "finish": "مطفي"
+      }
+    },
+    "specifications": {
+      "material": "المادة",
+      "thickness": "السماكة",
+      "size": "الحجم",
+      "weight": "الوزن",
+      "installation": "التركيب",
+      "finish": "التشطيب"
+    }
   }
 }

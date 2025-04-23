@@ -32,7 +32,7 @@ const Hero = () => {
           <div className="relative lg:h-[600px] animate-fade-in">
             <div className="absolute top-0 right-0 w-80 h-96 bg-accent rounded-tl-3xl rounded-br-3xl -z-10 transform translate-x-8 translate-y-8"></div>
             <img 
-              src="https://images.unsplash.com/photo-1610115799042-4a858909c6cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&h=1200&q=80" 
+              src="https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&h=1200&q=80" 
               alt={t("home.hero.title")}
               className="w-full h-full object-cover rounded-tl-3xl rounded-br-3xl shadow-xl"
             />

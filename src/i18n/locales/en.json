@@ -19,7 +19,20 @@
     "quickView": "Quick View",
     "addToCart": "Add to Cart",
     "popular": "Popular",
-    "new": "New"
+    "new": "New",
+    "reviews": "reviews",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "quantity": "Quantity",
+    "totalPrice": "Total Price",
+    "wishlist": "Add to Wishlist",
+    "addToFavorites": "Add to Favorites",
+    "quickPreview": "Quick preview of the product",
+    "tabs": {
+      "details": "Details",
+      "features": "Features",
+      "specifications": "Specifications"
+    }
   },
   "categories": {
     "title": "Categories",
@@ -87,5 +100,34 @@
   "pagination": {
     "previous": "Previous",
     "next": "Next"
+  },
+  "products": {
+    "carrara": {
+      "name": "Carrara White Marble Alternative",
+      "description": "Our premium Carrara White Marble Alternative offers the classic elegance of Italian Carrara marble without the maintenance concerns or high cost. Perfect for countertops, backsplashes, and feature walls.",
+      "features": {
+        "stainResistant": "Stain-resistant surface",
+        "heatResistant": "Heat-resistant up to 180°C",
+        "scratchResistant": "Scratch-resistant",
+        "easyClean": "Easy to clean",
+        "noSealing": "No sealing required"
+      },
+      "specifications": {
+        "material": "High-grade PVC composite",
+        "thickness": "12mm",
+        "size": "120cm x 240cm",
+        "weight": "22kg per sheet",
+        "installation": "Adhesive mounting",
+        "finish": "Matte"
+      }
+    },
+    "specifications": {
+      "material": "Material",
+      "thickness": "Thickness",
+      "size": "Size",
+      "weight": "Weight",
+      "installation": "Installation",
+      "finish": "Finish"
+    }
   }
 }
